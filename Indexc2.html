@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOD Caretaker Portal</title>
+    <style>
+        body { font-family: sans-serif; background: #f3f4f6; margin: 0; padding: 0; }
+        .container { max-width: 400px; margin: auto; background: white; min-height: 100vh; padding: 20px; box-sizing: border-box; }
+        .hidden { display: none !important; }
+        .btn { width: 100%; background: #d97706; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-green { background: #16a34a; }
+        input { width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        .card { background: #fff; border: 1px solid #e5e7eb; padding: 15px; border-radius: 10px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- SCREEN 1: LOGIN -->
+    <div id="screen-login">
+        <div style="text-align: center; margin-top: 40px;">
+            <h2>🚨 SOD Caretaker Portal</h2>
+            <p style="font-size: 12px; color: gray;">Secure Partner Login via Gmail</p>
+        </div>
+
+        <div class="card">
+            <label style="font-size: 12px; font-weight: bold;">Enter Your Gmail Address</label>
+            <input type="email" id="email-input" placeholder="caretaker@gmail.com" />
+            
+            <button class="btn" onclick="sendOTP()">Send OTP 📩</button>
+
+            <div id="otp-box" class="hidden" style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
+                <label style="font-size: 12px; font-weight: bold;">Enter 4-Digit OTP</label>
+                <input type="text" id="otp-input" placeholder="e.g. 1234" maxlength="4" style="text-align: center; letter-spacing: 5px; font-weight: bold;" />
+                <button class="btn btn-green" onclick="verifyOTP()">Verify & Login 🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN 2: ONBOARDING (Documents) -->
+    <div id="screen-onboarding" class="hidden">
+        <div style="background: #d97706; color: white; padding: 15px; border-radius: 10px;">
+            <h3>Live Verification & Documents</h3>
+            <p style="font-size: 11px;">Upload Selfie & Address Proof (Front/Back)</p>
+        </div>
+
+        <div class="card" style="margin-top: 15px;">
+            <label style="font-size: 12px; font-weight: bold;">📸 Live Face Selfie</label>
+            <input type="file" accept="image/*" capture="user" onchange="alert('Selfie captured successfully!')" />
+
+            <label style="font-size: 12px; font-weight: bold;">🏠 Address Proof (Front Side)</label>
+            <input type="file" accept="image/*" onchange="alert('Front side uploaded!')" />
+
+            <label style="font-size: 12px; font-weight: bold;">🏠 Address Proof (Back Side)</label>
+            <input type="file" accept="image/*" onchange="alert('Back side uploaded!')" />
+
+            <label style="font-size: 12px; font-weight: bold;">🛡️ Police Verification (PVC)</label>
+            <input type="file" accept="image/*" />
+
+            <button class="btn btn-green" onclick="goToDashboard()">Submit & Continue 🚀</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 3: DASHBOARD -->
+    <div id="screen-dashboard" class="hidden">
+        <div style="background: #d97706; color: white; padding: 15px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+            <h3>Dashboard</h3>
+            <button onclick="location.reload()" style="background: #b45309; color: white; border: none; padding: 5px 10px; border-radius: 5px;">Logout</button>
+        </div>
+
+        <div class="card" style="margin-top: 15px; background: #fffbeb; border-color: #fde68a;">
+            <h4 style="margin: 0 0 5px 0; color: #b45309;">⚠️ PVC Grace Period Active</h4>
+            <p style="font-size: 11px; color: #92400e;">Aapki pehli booking ke liye grace period active hai.</p>
+        </div>
+
+        <div class="card">
+            <h4>Available Tasks</h4>
+            <div style="display: flex; justify-content: space-between; align-items: center; background: #f9fafb; padding: 10px; border-radius: 6px;">
+                <div>
+                    <strong>Basic Service Task</strong><br>
+                    <small style="color: gray;">Uttam Nagar • 0.5 km</small>
+                </div>
+                <span style="background: #dcfce7; color: #15803d; padding: 5px 10px; border-radius: 20px; font-weight: bold; font-size: 12px;">₹90</span>
+            </div>
+            <button class="btn btn-green" onclick="alert('Task accepted successfully!')" style="margin-top: 10px;">Accept Task</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let myOTP = "1234";
+
+    function sendOTP() {
+        let email = document.getElementById('email-input').value;
+        if(!email || !email.includes('@')) {
+            alert('Kripya sahi Email dalein!');
+            return;
+        }
+        document.getElementById('otp-box').classList.remove('hidden');
+        alert('Demo OTP sent: 1234');
+    }
+
+    function verifyOTP() {
+        let otp = document.getElementById('otp-input').value;
+        if(otp !== myOTP) {
+            alert('Galat OTP hai! (Demo OTP: 1234 dalein)');
+            return;
+        }
+        document.getElementById('screen-login').classList.add('hidden');
+        document.getElementById('screen-onboarding').classList.remove('hidden');
+    }
+
+    function goToDashboard() {
+        document.getElementById('screen-onboarding').classList.add('hidden');
+        document.getElementById('screen-dashboard').classList.remove('hidden');
+    }
+</script>
+
+</body>
+</html>
